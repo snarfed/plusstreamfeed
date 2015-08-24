@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Google+ Atom feeds</title>
+<link href="/static/style.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+function render() {
+  SID = document.getElementById("SID").value.trim();
+  SSID = document.getElementById("SSID").value.trim();
+  HSID = document.getElementById("HSID").value.trim();
+
+  document.getElementById("link-div").style.color =
+    (SID && SSID && HSID) ? "black" : "lightgray";
+
+  url = window.location + "cookie?SID=" + SID + "&SSID=" + SSID + "&HSID=" + HSID;
+  document.getElementById("link").innerHTML =
+    (SID && SSID && HSID) ? "<a href='" + url + "'>" + url + "</a>" : url;
+}
+window.onload = render;
+</script>
+</head>
+
+<body>
+<div id="header">
+  <a href="/"><img id="logo" src="/static/plusfeed.png"></img></a>
+  <p id="title"><span>Google+ Atom feeds</span></p>
+</div>
+
+<div id="body">
+<p>Want an Atom feed of your
+<a href="https://support.google.com/plus/topic/3052526?ref_topic=3049662&vid=1-635759719535897361-2128278691">Google+ stream</a>,
+ie posts from people in your circles, that you can subscribe to and read in
+your favorite RSS feed reader?</p>
+
+<p><a href="http://www.wikihow.com/View-Cookies" target="_blank">Follow these
+instructions</a> to extract the three <code>google.com</code> cookies
+named <code>SID</code>, <code>SSID</code>, and <code>HSID</code> from your
+browser and paste them below.</p>
+
+<nobr>
+ <label for="SID">SID</label>
+ <input type="text" id="SID" onChange="render()" onKeyUp="render()" />
+</nobr>
+<nobr>
+ <label for="SSID">SSID</label>
+ <input type="text" id="SSID" onChange="render()" onKeyUp="render()" />
+</nobr>
+<nobr>
+ <label for="HSID">HSID</label>
+ <input type="text" id="HSID" onChange="render()" onKeyUp="render()" />
+</nobr>
+
+<div id="link-div">
+<p>Now add this link to your feed reader, and you're done!</p>
+<p id="link">></p>
+</div>
+
+<p id="privacy" class="lead">
+This app does <em style="font-style: normal">not</em> store or use your Google+
+data, username, password, or cookie. It only reformats your news feed and passes
+it to your feed reader when requested. You can confirm by
+<a href="https://github.com/snarfed/gplus-atom">examining its source code</a>.
+</p>
+
+<div id="bottom"></div>
+
+<div id="footer">
+  <a href="https://github.com/snarfed/gplus-atom">Source</a>
+  | <a href="https://github.com/snarfed/gplus-atom/issues">Questions?</a>
+  | <a href="https://twitter-atom.appspot.com/">twitter-atom</a>
+  | <a href="https://facebook-atom.appspot.com/">facebook-atom</a>
+  | <a href="https://instagram-atom.appspot.com/">instagram-atom</a>
+</div>
+
+</body>
+</html>
