@@ -1,8 +1,8 @@
 gplus-atom
 ==========
 
-A webapp that generates and serves an Atom feed of your Google+, ie
-posts from people in your circles.
+A webapp that generates and serves an Atom feed of your Google+, ie posts from
+people in your circles.
 
 Deployed on App Engine at https://gplus-atom.appspot.com/
 
@@ -27,8 +27,17 @@ pip install -r requirements.txt
 Now run `/usr/local/google_appengine/dev_appserver.py .` and open
 [localhost:8080](http://localhost:8080/) in your browser!
 
+There's a good chance you'll need to make changes to
+[granary](https://github.com/snarfed/granary) at the same time as gplus-atom. To
+do that, clone the granary repo elsewhere, then install it in "source" mode
+with:
 
-need:
-SID
-HSID
-SSID
+```
+pip uninstall oauth-dropins
+pip install -e <path to oauth-dropins>
+ln -s <path to oauth-dropins>/oauth_dropins \
+  local/lib/python2.7/site-packages/oauth_dropins
+```
+
+The symlink is necessary because App Engine's `vendor` module doesn't follow
+`.egg-link` files. :/
