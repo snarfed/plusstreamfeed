@@ -1,4 +1,4 @@
-"""Fetch plus.facebook.com with a cookie and convert it to Atom.
+"""Fetch plus.google.com with a cookie and convert it to Atom.
 """
 
 import logging
