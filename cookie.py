@@ -28,26 +28,24 @@ class CookieHandler(webapp2.RequestHandler):
       timeout=60)
     body = resp.read().decode('utf-8')
     logging.info('Response: %s', resp.getcode())
-    assert resp.getcode() == 200
 
-    # TODO: check we logged in ok
-    # if not soup.find('a', href=re.compile('^/logout.php')):
-    #   return self.abort(401, "Couldn't log into Facebook with cookie %s" % cookie)
+    if resp.getcode() != 200 or 'href="https://accounts.google.com/Logout' not in body:
+      return self.abort(401, "Couldn't log into Google+ with cookie %s" % cookie)
 
-    # home_link = soup.find('a', href=re.compile(
-    #   r'/[^?]+\?ref_component=mbasic_home_bookmark.*'))
-    # if home_link:
-    #   href = home_link['href']
-    #   logging.info('Logged in for user %s', href[1:href.find('?')])
-    # else:
-    #   logging.warning("Couldn't determine username or id!")
+    actor = {}
+    name_email = re.compile(r'title="Google Account: ([^"]+)"').search(body)
+    if name_email:
+      logging.info('Logged in for user %s', name_email.group(1))
+      actor = {'displayName': name_email.group(1)}
+    else:
+      logging.warning("Couldn't determine Google user!")
 
     activities = googleplus.GooglePlus(None, None).html_to_activities(body)
 
     self.response.headers['Content-Type'] = 'application/atom+xml'
     self.response.out.write(atom.activities_to_atom(
-        activities, {}, title='title', host_url=self.request.host_url + '/',
-        request_url=self.request.path_url))
+      activities, actor, title='gplus-atom feed',
+      host_url=self.request.host_url + '/', request_url=self.request.path_url))
 
 
 application = webapp2.WSGIApplication(
