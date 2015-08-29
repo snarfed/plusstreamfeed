@@ -1,5 +1,5 @@
-application: gplus-atom
-version: 1
+application: plusstreamfeed
+version: 3
 runtime: python27
 threadsafe: true
 api_version: 1

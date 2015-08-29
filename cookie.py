@@ -44,7 +44,7 @@ class CookieHandler(webapp2.RequestHandler):
 
     self.response.headers['Content-Type'] = 'application/atom+xml'
     self.response.out.write(atom.activities_to_atom(
-      activities, actor, title='gplus-atom feed',
+      activities, actor, title='plusstreamfeed (Google+ Atom feed)',
       host_url=self.request.host_url + '/', request_url=self.request.path_url))
 
 

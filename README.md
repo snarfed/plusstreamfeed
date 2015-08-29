@@ -1,10 +1,10 @@
-gplus-atom
-==========
+plusstreamfeed
+==============
 
 A webapp that generates and serves an Atom feed of your Google+, ie posts from
 people in your circles.
 
-Deployed on App Engine at https://gplus-atom.appspot.com/
+Deployed on App Engine at https://plusstreamfeed.appspot.com/
 
 License: This project is placed in the public domain.
 
@@ -28,7 +28,7 @@ Now run `/usr/local/google_appengine/dev_appserver.py .` and open
 [localhost:8080](http://localhost:8080/) in your browser!
 
 There's a good chance you'll need to make changes to
-[granary](https://github.com/snarfed/granary) at the same time as gplus-atom. To
+[granary](https://github.com/snarfed/granary) at the same time as plusstreamfeed. To
 do that, clone the granary repo elsewhere, then install it in "source" mode
 with:
 
