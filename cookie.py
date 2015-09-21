@@ -40,7 +40,10 @@ class CookieHandler(webapp2.RequestHandler):
     else:
       logging.warning("Couldn't determine Google user!")
 
-    activities = googleplus.GooglePlus(None, None).html_to_activities(body)
+    activities = [
+      a for a in googleplus.GooglePlus(None, None).html_to_activities(body)
+      if a.get('verb') != 'like'
+    ]
 
     self.response.headers['Content-Type'] = 'application/atom+xml'
     self.response.out.write(atom.activities_to_atom(
