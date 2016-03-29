@@ -7,10 +7,12 @@ import urllib2
 
 import appengine_config
 from granary import atom, googleplus
+from oauth_dropins.webutil import handlers
 import webapp2
 
 
 class CookieHandler(webapp2.RequestHandler):
+  handle_exception = handlers.handle_exception
 
   def get(self):
     try:
