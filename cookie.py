@@ -11,7 +11,7 @@ from oauth_dropins.webutil import handlers
 import webapp2
 
 
-class CookieHandler(webapp2.RequestHandler):
+class CookieHandler(handlers.ModernHandler):
   handle_exception = handlers.handle_exception
 
   def get(self):
