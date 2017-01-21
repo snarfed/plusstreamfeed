@@ -1,6 +1,7 @@
 """Fetch plus.google.com with a cookie and convert it to Atom.
 """
 
+import datetime
 import logging
 import re
 import urllib2
@@ -10,10 +11,13 @@ from granary import atom, googleplus
 from oauth_dropins.webutil import handlers
 import webapp2
 
+CACHE_EXPIRATION = datetime.timedelta(minutes=5)
+
 
 class CookieHandler(handlers.ModernHandler):
   handle_exception = handlers.handle_exception
 
+  @handlers.memcache_response(CACHE_EXPIRATION)
   def get(self):
     try:
       cookie = 'SID=%(SID)s; SSID=%(SSID)s; HSID=%(HSID)s' % self.request.params
