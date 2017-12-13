@@ -1,5 +1,7 @@
-application: plusstreamfeed
-version: 3
+# https://cloud.google.com/appengine/docs/standard/python/config/appref
+
+# application: plusstreamfeed
+# version: 3
 runtime: python27
 threadsafe: true
 api_version: 1
@@ -48,7 +50,7 @@ handlers:
   secure: always
 
 skip_files:
-- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*\.(c|cc|cpp|h|o|py[co]|so)$
 - ^(.*/)?.*/RCS/.*
 - ^(.*/)?\..*
 - ^(.*/)?.*\.bak$
