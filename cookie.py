@@ -35,8 +35,19 @@ class CookieHandler(handlers.ModernHandler):
     body = resp.read().decode('utf-8')
     logging.info('Response: %s', resp.getcode())
 
-    if resp.getcode() != 200 or 'href="https://accounts.google.com/Logout' not in body:
-      return self.abort(401, "Couldn't log into Google+ with cookie %s" % cookie)
+    host_url = self.request.host_url + '/'
+    if resp.getcode() in (401, 403) or 'href="https://accounts.google.com/Logout' not in body:
+      self.response.headers['Content-Type'] = 'application/atom+xml'
+      self.response.out.write(atom.activities_to_atom([{
+        'object': {
+          'url': self.request.url,
+          'content': 'Your plusstreamfeed (Google+ Atom feed) cookie isn\'t working. <a href="%s">Click here to regenerate your feed!</a>' % host_url,
+          },
+        }], {}, title='plusstreamfeed (Google+ Atom feed)',
+        host_url=host_url, request_url=self.request.path_url))
+      return
+    elif resp.getcode() != 200:
+      return self.abort(502, "Google+ fetch failed")
 
     actor = {}
     name_email = re.compile(r'title="Google Account: ([^"]+)"').search(body)
@@ -54,7 +65,7 @@ class CookieHandler(handlers.ModernHandler):
     self.response.headers['Content-Type'] = 'application/atom+xml'
     self.response.out.write(atom.activities_to_atom(
       activities, actor, title='plusstreamfeed (Google+ Atom feed)',
-      host_url=self.request.host_url + '/', request_url=self.request.path_url,
+      host_url=host_url, request_url=self.request.path_url,
       xml_base='https://plus.google.com/'))
 
 
